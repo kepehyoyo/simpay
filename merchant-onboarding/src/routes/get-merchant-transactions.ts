@@ -1,0 +1,1 @@
+//GET /merchants/:id/transactions: Retrieve a list of transactions for a merchant account by ID.

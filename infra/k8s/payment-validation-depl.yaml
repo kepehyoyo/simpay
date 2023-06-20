@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-validation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-validation
+  template:
+    metadata:
+      labels:
+        app: payment-validation
+    spec:
+      containers:
+        - name: payment-validation
+          image: kepehyoyo/payment-validation
+          env:       
+            - name: MONGO_URI
+              value: 'mongodb://payment-validation-mongo-srv:27017/payment-validation'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-validation-srv
+spec:
+  selector:
+    app: payment-validation
+  ports:
+    - name: payment-validation
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

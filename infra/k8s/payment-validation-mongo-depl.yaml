@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-validation-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-validation-mongo
+  template:
+    metadata:
+      labels:
+        app: payment-validation-mongo
+    spec:
+      containers:
+        - name: payment-validation-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-validation-mongo-srv
+spec:
+  selector:
+    app: payment-validation-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

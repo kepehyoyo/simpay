@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-auth
+  template:
+    metadata:
+      labels:
+        app: user-auth
+    spec:
+      containers:
+        - name: user-auth
+          image: kepehyoyo/user-auth
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://user-auth-mongo-srv:27017/user-auth'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-auth-srv
+spec:
+  selector:
+    app: user-auth
+  ports:
+    - name: user-auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

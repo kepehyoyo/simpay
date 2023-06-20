@@ -1,0 +1,1 @@
+//PUT /merchants/:id: Update a merchant's account information by ID.

@@ -1,0 +1,1 @@
+//GET /merchants/:id/balances: Retrieve the current balance for a merchant account by ID.

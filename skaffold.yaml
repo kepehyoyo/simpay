@@ -1,0 +1,80 @@
+apiVersion: skaffold/v2beta15
+kind: Config
+deploy:
+  kubectl:
+    manifests: 
+      - ./infra/k8s/qrcode-depl.yaml
+      - ./infra/k8s/qrcode-mongo-depl.yaml
+      - ./infra/k8s/transactions-depl.yaml
+      - ./infra/k8s/transactions-mongo-depl.yaml
+      - ./infra/k8s/wallet-depl.yaml
+      - ./infra/k8s/wallet-mongo-depl.yaml
+      - ./infra/k8s/user-auth-depl.yaml
+      - ./infra/k8s/user-auth-mongo-depl.yaml 
+      - ./infra/k8s/user-profile-depl.yaml
+      - ./infra/k8s/user-profile-mongo-depl.yaml
+      - ./infra/k8s/payment-validation-depl.yaml
+      - ./infra/k8s/payment-validation-mongo-depl.yaml 
+      - ./infra/k8s/payment-gateway-depl.yaml
+      - ./infra/k8s/payment-gateway-mongo-depl.yaml 
+      - ./infra/k8s/ingress-srv.yaml 
+build:
+  local:
+    push: false
+  artifacts:
+    - image: kepehyoyo/wallet
+      context: wallet
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: kepehyoyo/user-auth
+      context: user-auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: kepehyoyo/user-profile
+      context: user-profile
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: kepehyoyo/qrcode
+      context: qrcode
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: kepehyoyo/transactions
+      context: transactions
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: kepehyoyo/payment-validation
+      context: payment-validation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: kepehyoyo/payment-gateway
+      context: payment-gateway
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

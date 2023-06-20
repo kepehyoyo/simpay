@@ -1,0 +1,1 @@
+//GET /merchants/:id/documents/:documentId: Retrieve a document for a merchant account by ID and document ID

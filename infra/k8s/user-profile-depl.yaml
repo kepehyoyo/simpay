@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-profile-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-profile
+  template:
+    metadata:
+      labels:
+        app: user-profile
+    spec:
+      containers:
+        - name: user-profile
+          image: kepehyoyo/user-profile
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://user-profile-mongo-srv:27017/user-profile'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-profile-srv
+spec:
+  selector:
+    app: user-profile
+  ports:
+    - name: user-profile
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

@@ -1,0 +1,35 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: offer-created
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 604800000
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: offer-updated
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 604800000
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: offer-deleted
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 604800000

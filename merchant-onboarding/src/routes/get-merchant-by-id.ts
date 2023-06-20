@@ -1,0 +1,1 @@
+//GET /merchants/:id: Retrieve a merchant's account information by ID.

@@ -1,0 +1,1 @@
+//POST /merchants/:id/payouts: Initiate a payout for a merchant account by ID.

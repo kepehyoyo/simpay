@@ -1,0 +1,1 @@
+//POST /merchants: Create a new merchant account.

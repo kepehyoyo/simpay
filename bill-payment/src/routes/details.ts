@@ -1,0 +1,1 @@
+//retrieving bill payment details: /bill-payment/details (GET)

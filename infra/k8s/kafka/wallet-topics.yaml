@@ -1,0 +1,33 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: wallet-created
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 2
+  replicas: 2
+
+---
+
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: wallet-updated
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 2
+  replicas: 2
+
+---
+
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: wallet-deleted
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 1

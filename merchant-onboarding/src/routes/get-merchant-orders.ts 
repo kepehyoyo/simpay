@@ -1,0 +1,1 @@
+//GET /merchants/:id/orders: Retrieve a list of orders placed by a merchant by ID.

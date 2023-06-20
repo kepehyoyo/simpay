@@ -1,0 +1,45 @@
+"use strict";
+// Checking wallet balance (GET)
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkWalletBalanceRouter = void 0;
+/* Get Wallet Balance: This API endpoint retrieves the current balance of the user's digital wallet.
+Endpoint: /api/wallet/balance
+Method: GET
+Request Body: { "walletId": "wallet123" }
+Response Body: { "walletId": "wallet123", "balance": 500 } */
+const express_1 = __importDefault(require("express"));
+const express_validator_1 = require("express-validator");
+const wallet_1 = require("../models/wallet");
+const router = express_1.default.Router();
+exports.checkWalletBalanceRouter = router;
+router.get("/api/wallet/wallet/:walletId/balance", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, express_validator_1.check)('walletId').isUUID().run(req);
+    const errors = (0, express_validator_1.validationResult)(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { walletId } = req.params;
+    try {
+        const wallet = yield wallet_1.Wallet.findOne({ walletId });
+        if (!wallet) {
+            return res.status(404).json({ message: 'Wallet not found' });
+        }
+        return res.json({ wallet });
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Server error' });
+    }
+}));

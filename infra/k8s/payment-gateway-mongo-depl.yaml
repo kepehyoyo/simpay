@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-gateway-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-gateway-mongo
+  template:
+    metadata:
+      labels:
+        app: payment-gateway-mongo
+    spec:
+      containers:
+        - name: payment-gateway-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-gateway-mongo-srv
+spec:
+  selector:
+    app: payment-gateway-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

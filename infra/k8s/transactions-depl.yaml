@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactions
+  template:
+    metadata:
+      labels:
+        app: transactions
+    spec:
+      containers:
+        - name: transactions
+          image: kepehyoyo/transactions
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://transactions-mongo-srv:27017/transactions'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactions-srv
+spec:
+  selector:
+    app: transactions
+  ports:
+    - name: transactions
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

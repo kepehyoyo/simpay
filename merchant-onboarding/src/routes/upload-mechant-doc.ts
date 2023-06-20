@@ -1,0 +1,1 @@
+//POST /merchants/:id/documents: Upload a document for a merchant account by ID.
